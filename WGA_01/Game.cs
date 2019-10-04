@@ -9,32 +9,97 @@ namespace WGA_01
     class Game
     {
         Field field = new Field();
-        int src_i = 2;
-        int src_j = 2;
-        int dst_i = -1;
-        int dst_j = -1;
+        bool srcExist = false;
+        int src_i = -1;
+        int src_j = -1;
+        int dst_i = 2;
+        int dst_j = 2;
         string message = "";
 
 
-
-        void changeCell()
+        public void action(ConsoleKey key)
         {
-            if (src_i != dst_i && src_j != dst_j)
-                return;
-
-            if (src_i == dst_i)
-                if (Math.Abs(src_j - dst_j) != 1)
-                    return;
-            changeCell(field[src_i, src_j], field[dst_i, dst_j]);
+            switch (key)
+            {
+                case ConsoleKey.Enter:
+                    if (srcExist)
+                        forgetSrc();
+                    else
+                        rememberSrc();
+                    break;
+                case ConsoleKey.UpArrow:
+                    if (dst_i > 0)
+                    {
+                        dst_i--;
+                        if (srcExist)
+                        {
+                            if (changeCell())
+                                rememberSrc();
+                            else
+                                forgetSrc();
+                        }
+                    }
+                    break;
+                case ConsoleKey.DownArrow:
+                    if (dst_i < 4)
+                    {
+                        dst_i++;
+                        if (srcExist)
+                        {
+                            if (changeCell())
+                                rememberSrc();
+                            else
+                                forgetSrc();
+                        }
+                    }
+                    break;
+                case ConsoleKey.LeftArrow:
+                    if (dst_j > 0)
+                    {
+                        dst_j--;
+                        if (srcExist)
+                        {
+                            if (changeCell())
+                                rememberSrc();
+                            else
+                                forgetSrc();
+                        }
+                    }
+                    break;
+                case ConsoleKey.RightArrow:
+                    if (dst_j < 4)
+                    {
+                        dst_j++;
+                        if (srcExist)
+                        {
+                            if (changeCell())
+                                rememberSrc();
+                            else
+                                forgetSrc();
+                        }
+                    }
+                    break;
+            }
         }
-        void changeCell(Cell dst, Cell src)
+        private void rememberSrc()
         {
-            if (dst.State != State.Clear || src.State != State.Busy) return;
-            dst.State = State.Busy;
-            dst.Chip = src.Chip;
-            src.State = State.Clear;
-            src.Chip = Chip.None;
+            src_i = dst_i;
+            src_j = dst_j;
+            srcExist = true;
         }
+        private void forgetSrc()
+        {
+            src_i = -1;
+            src_j = -1;
+            srcExist = false;
+        }
+        private bool changeCell()
+        {
+            //if (src_i == dst_i && Math.Abs(src_j - dst_j) == 1 || src_j == dst_j && Math.Abs(src_i - dst_i) == 1)
+            //changeCell(field[dst_i, dst_j], field[src_i, src_j]);
+            return field.changeCell(dst_i, dst_j, src_i, src_j);
+        }
+        
 
         private void print(string str, int mul = 1)
         {
@@ -47,6 +112,7 @@ namespace WGA_01
         }
         public void printGame()
         {
+            Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.Black;
             Console.WriteLine();
@@ -74,7 +140,7 @@ namespace WGA_01
                 for (int j = 0; j < Field.size; j++)
                 {
                     print("|");
-                    if (i == select_i && j == select_j || i == take_i && j == take_j)
+                    if (i == dst_i && j == dst_j)
                         printCell(field[i, j], true);
                     else
                         printCell(field[i, j], false);
@@ -105,10 +171,21 @@ namespace WGA_01
         }
         private void printChip(Chip chip, bool selected = false)
         {
-            if (chip == Chip.Red) Console.BackgroundColor = ConsoleColor.Red;
-            if (chip == Chip.Green) Console.BackgroundColor = ConsoleColor.Green;
-            if (chip == Chip.Blue) Console.BackgroundColor = ConsoleColor.Blue;
-            if (chip == Chip.None) Console.BackgroundColor = ConsoleColor.Black;
+            switch (chip)
+            {
+                case Chip.Red:
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    break;
+                case Chip.Green:
+                    Console.BackgroundColor = ConsoleColor.Green;
+                    break;
+                case Chip.Blue:
+                    Console.BackgroundColor = ConsoleColor.Blue;
+                    break;
+                case Chip.None:
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    break;
+            }
             if (selected)
                 Console.Write("[]");
             else

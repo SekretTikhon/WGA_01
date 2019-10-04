@@ -66,9 +66,18 @@ namespace WGA_01
         public Cell this[int i, int j]
         {
             get { return cells[i, j]; }
+            set { cells[i, j] = value; }
         }
 
-        
+        public bool changeCell(int dst_i, int dst_j, int src_i, int src_j)
+        {
+            if (cells[dst_i, dst_j].State != State.Clear || cells[src_i, src_j].State != State.Busy) return false;
+            cells[dst_i, dst_j].State = State.Busy;
+            cells[dst_i, dst_j].Chip = cells[src_i, src_j].Chip;
+            cells[src_i, src_j].State = State.Clear;
+            cells[src_i, src_j].Chip = Chip.None;
+            return true;
+        }
 
 
 
