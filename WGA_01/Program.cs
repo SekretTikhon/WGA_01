@@ -10,6 +10,13 @@ namespace WGA_01
     {
         static void Main(string[] args)
         {
+            Game game = new Game();
+            game.printGame();
+            for (int i = 0; i < 1; i++)
+            {
+                ConsoleKeyInfo k = Console.ReadKey();
+                Console.WriteLine(k.Key);
+            }
         }
     }
 }
