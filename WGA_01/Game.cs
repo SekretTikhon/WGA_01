@@ -14,7 +14,7 @@ namespace WGA_01
         int src_j = -1;
         int dst_i = 2;
         int dst_j = 2;
-        string message = "";
+        public string message = "info:\tPress arrows to move \"cursor\".\n\tEnter - take/drop chip. Escape - exit the Game.";
 
 
         public void action(ConsoleKey key)
@@ -113,7 +113,7 @@ namespace WGA_01
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.Black;
             println();
-            println("info: " + message);
+            println(message);
             println();
             printField();
             Console.BackgroundColor = ConsoleColor.Black;
@@ -188,6 +188,14 @@ namespace WGA_01
             else
                 print("  ");
             Console.BackgroundColor = ConsoleColor.Black;
+        }
+        public bool gameOver()
+        {
+            for (int j = 0; j < 5; j += 2)
+                for (int i = 0; i < 5; i++)
+                    if (field[i, j].Chip != field[j])
+                        return false;
+            return true;
         }
     }
 }

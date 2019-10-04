@@ -21,9 +21,8 @@ namespace WGA_01
         }
         private void init()
         {
-            //char[] targetParam = { 'R', 'O', 'G', 'O', 'B' };
             initTarget(new char[] { 'R', 'O', 'G', 'O', 'B' });
-
+            
             initCells(new char[,] {
                 { 'G', 'X', 'R', 'X', 'G' },
                 { 'B', 'O', 'R', 'O', 'G' },
@@ -32,6 +31,16 @@ namespace WGA_01
                 { 'B', 'X', 'B', 'X', 'R' },
             });
             
+            /* to degug
+            initCells(new char[,] {
+                { 'R', 'X', 'G', 'X', 'B' },
+                { 'R', 'O', 'O', 'G', 'B' },
+                { 'R', 'X', 'G', 'X', 'B' },
+                { 'R', 'O', 'G', 'O', 'B' },
+                { 'R', 'X', 'G', 'X', 'B' },
+            });
+            */
+
         }
         private void initTarget(char[] targetParam)
         {

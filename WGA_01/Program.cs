@@ -17,10 +17,25 @@ namespace WGA_01
                 game.printGame();
                 pressKey = Console.ReadKey().Key;
                 game.action(pressKey);
+
+                if (game.gameOver())
+                {
+                    game.message = "\tCongratulations! You won!\n\tFor restart the Game press Enter, for exit press Escape.";
+                    do
+                    {
+                        game.printGame();
+                        pressKey = Console.ReadKey().Key;
+                    }
+                    while (pressKey != ConsoleKey.Enter && pressKey != ConsoleKey.Escape);
+                    if (pressKey == ConsoleKey.Enter)
+                        game = new Game();
+                    else
+                        break;
+                }
+                
             } while (pressKey != ConsoleKey.Escape);
-            Console.Clear();
-            Console.WriteLine("Thanks for playing!");
-            Console.WriteLine("Press any key for exit.");
+            game.message = "Thanks for playing!\nPress any key for exit.";
+            game.printGame();
             Console.ReadKey();
         }
     }
