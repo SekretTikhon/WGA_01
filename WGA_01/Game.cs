@@ -95,12 +95,9 @@ namespace WGA_01
         }
         private bool changeCell()
         {
-            //if (src_i == dst_i && Math.Abs(src_j - dst_j) == 1 || src_j == dst_j && Math.Abs(src_i - dst_i) == 1)
-            //changeCell(field[dst_i, dst_j], field[src_i, src_j]);
             return field.changeCell(dst_i, dst_j, src_i, src_j);
         }
         
-
         private void print(string str, int mul = 1)
         {
             for (int i = 0; i < mul; i++)
@@ -115,9 +112,9 @@ namespace WGA_01
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.Black;
-            Console.WriteLine();
-            Console.WriteLine("info: " + message);
-            Console.WriteLine();
+            println();
+            println("info: " + message);
+            println();
             printField();
             Console.BackgroundColor = ConsoleColor.Black;
         }
@@ -159,9 +156,9 @@ namespace WGA_01
             {
                 Console.BackgroundColor = ConsoleColor.Gray;
                 if (selected)
-                    Console.Write("[]");
+                    print("[]");
                 else
-                    Console.Write("  ");
+                    print("  ");
             }
             else
             {
@@ -187,9 +184,9 @@ namespace WGA_01
                     break;
             }
             if (selected)
-                Console.Write("[]");
+                print("[]");
             else
-                Console.Write("  ");
+                print("  ");
             Console.BackgroundColor = ConsoleColor.Black;
         }
     }
